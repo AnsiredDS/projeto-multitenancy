@@ -26,6 +26,7 @@ return [
      */
     'tenant_artisan_search_fields' => [
         'id',
+        //TODO: Verificar como funciona  essa configuração 
     ],
 
     /*
@@ -34,10 +35,17 @@ return [
      * A valid task is any class that implements Spatie\Multitenancy\Tasks\SwitchTenantTask
     */
     'switch_tenant_tasks' => [
-        // \Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
+        Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
         Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
-        // TO:DO: Entender o que faz esse \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class
-        // \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class,
+        /*
+        TODO: Entender o que faz esse \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class
+        Basicamente, por padrão todas as rotas possuem cache, o que significa que por padrão a aplicação só irá rodar
+        a rota uma vez. Caso as rotas sejam estáticas isso ajuda, mas no caso de rotas dinâmicas (Como rotas
+        diferentes para tenants diferentes), seria necessário um cache de rota diferente para cada tenant diferente.
+        Ativando a task abaixo, a configuração padrão APP_ROUTES_CACHE do arquivo .env será trocada para um valor
+        especifico do tenant.
+        */
+        \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class,
     ],
 
     /*

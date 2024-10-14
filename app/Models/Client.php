@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\Multitenancy\Contracts\IsTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Multitenancy\Models\Concerns\ImplementsTenant;
@@ -27,6 +28,8 @@ class Client extends Model implements IsTenant
     public function createDatabase()
     {
         $databaseName = $this->database;
+        $tenantId = $this->id;
         DB::statement("CREATE DATABASE IF NOT EXISTS `$databaseName`");
+        Artisan::call("tenants:artisan --tenant=$tenantId 'migrate --database=tenant'");
     }
 }

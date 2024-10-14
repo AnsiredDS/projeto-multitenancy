@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'base-domain' => env('APP_DOMAIN', 'imobiwox.localhost'),
+
 ];
