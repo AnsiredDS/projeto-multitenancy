@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tenant;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Multitenancy\Models\Concerns\UsesLandlordConnection;
 
-class User extends Authenticatable 
+class TenantUser extends Model
 {
-    use HasFactory, Notifiable, UsesLandlordConnection;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -46,5 +41,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('team', function (Builder $query) {
+            if (auth()->hasUser()) {
+                $query->where('team_id', auth()->user()->team_id);
+                // or with a `team` relationship defined:
+                $query->whereBelongsTo(auth()->user()->team);
+            }
+        });
     }
 }
