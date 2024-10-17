@@ -7,6 +7,7 @@ use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Spatie\Multitenancy\Models\Tenant;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -22,15 +23,18 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $isTenant = Tenant::checkCurrent() || true;
+        $guard = $isTenant ? 'tenant' : 'landlord';
+        $color = $isTenant ? Color::Amber : Color::Blue;
+
         return $panel
-            ->default()
             ->id('admin')
             ->path('admin')
             ->registration()
             ->login()
-            ->authGuard('web')
+            ->authGuard(guard: $guard)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => $color,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

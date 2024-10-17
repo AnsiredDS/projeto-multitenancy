@@ -2,12 +2,14 @@
 
 namespace App\Models\Tenant;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class TenantUser extends Model
+class User extends Authenticatable
 {
     use HasFactory;
+
+    protected $connection = 'tenant';
 
     /**
      * The attributes that are mass assignable.
@@ -41,16 +43,5 @@ class TenantUser extends Model
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    protected static function booted(): void
-    {
-        static::addGlobalScope('team', function (Builder $query) {
-            if (auth()->hasUser()) {
-                $query->where('team_id', auth()->user()->team_id);
-                // or with a `team` relationship defined:
-                $query->whereBelongsTo(auth()->user()->team);
-            }
-        });
     }
 }
