@@ -4,10 +4,12 @@ namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Multitenancy\Models\Concerns\UsesTenantConnection;
 
 class User extends Authenticatable
 {
     use HasFactory;
+    use UsesTenantConnection;
 
     protected $connection = 'tenant';
 
