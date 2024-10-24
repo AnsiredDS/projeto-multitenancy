@@ -6,6 +6,7 @@ use App\Filament\Resources\TenantResource\Pages;
 use App\Filament\Resources\TenantResource\RelationManagers;
 use App\Models\Tenant;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,15 +24,14 @@ class TenantResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
+                    ->label('Nome')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('domain')
+                TextInput::make('domain')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('database')
-                    ->required()
-                    ->maxLength(255),
+                    ->label('Domínio')
+                    ->maxLength(255)
             ]);
     }
 

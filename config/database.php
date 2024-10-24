@@ -50,12 +50,12 @@ return [
             ]) : [],
         ],
 
-        'laravel_11' => [
+        'landlord' => [
             'driver' => 'mysql',
             'url' => env('DB_LANDLORD_URL'),
             'host' => env('DB_LANDLORD_HOST', '127.0.0.1'),
             'port' => env('DB_LANDLORD_PORT', '3306'),
-            'database' => env('DB_LANDLORD_DATABASE', 'laravel_11'),
+            'database' => env('DB_LANDLORD_DATABASE', 'landlord'),
             'username' => env('DB_LANDLORD_USERNAME', 'root'),
             'password' => env('DB_LANDLORD_PASSWORD', ''),
             'unix_socket' => env('DB_LANDLORD_SOCKET', ''),

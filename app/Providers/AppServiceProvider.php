@@ -19,10 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        /** 
-         * Como o pacote foi adicionado ao dont-discover, ele não será inicializado automaticamente
-         * pelo Laravel e precisa ser inicializado através do provider. 
-         * Talvez daria pra implementar de alguma algo para fazer o filament iniciar depois do multitenant.
-         */ 
+
     }
 }
